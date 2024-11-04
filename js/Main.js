@@ -3,16 +3,18 @@ import { BoundingBox } from './BoundingBox.js';
 import { Renderer } from './Renderer.js';
 
 // TODO:
-// 1. Create a separate class which stores the GraphSettings
-// 2. Create some kind of FileList which will store the following info per each file (graph)
+// 1. Properly update all sizes and dimensions from one place and accomodate the bounding box size for the size of the image and the canvas
+// 2. Use up down and move events from the entire window not just the canvas
+// 3. Create a separate class which stores the GraphSettings
+// 4. Create some kind of FileList which will store the following info per each file (graph)
 // 	- The image
 // 	- The zoom, position, BoundingBox etc. if implemented
 // 	- The saved GraphSettings
 // 	- Cached graph data I guess
 // 	Implement persistence for it as well (https://www.iubenda.com/en/help/5525-cookies-gdpr-requirements), implement it only
 // 	if the cookies are enabled.
-// 3. FIX: Bounding box for files occupying more than the canvas size
-// 4. I *guess* add some nice utilities, like automatically guessing the BoundingBox, exporting all graphs data simultenously
+// 5. FIX: Bounding box for files occupying more than the canvas size
+// 6. I *guess* add some nice utilities, like automatically guessing the BoundingBox, exporting all graphs data simultenously
 
 let box = new BoundingBox();
 
