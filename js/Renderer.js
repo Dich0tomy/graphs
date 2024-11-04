@@ -1,5 +1,5 @@
 // TODO: Rename to something like Renderer?
-export class GraphCanvas {
+export class Renderer {
   constructor(dimensions, context) {
 		this._dims = dimensions
     this._ctx = this._setupContext(context);

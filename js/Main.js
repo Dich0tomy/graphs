@@ -1,6 +1,6 @@
 import { CanvasDriver } from './CanvasDriver.js';
 import { BoundingBox } from './BoundingBox.js';
-import { GraphCanvas } from './Canvas.js';
+import { Renderer } from './Renderer.js';
 
 // TODO:
 // 1. Create a separate class which stores the GraphSettings
@@ -14,14 +14,13 @@ import { GraphCanvas } from './Canvas.js';
 // 3. I *guess* add some nice utilities, like automatically guessing the BoundingBox, exporting all graphs data simultenously
 // 4. Refactor things like Drag to classes
 // 5. Rename GraphCanvas to something like Renderer
-// 6. Rename files to PascalCase
-// 7. FIX: Bounding box for files occupying more than the canvas size
+// 6. FIX: Bounding box for files occupying more than the canvas size
 
 let box = new BoundingBox();
 
 // TODO: Potentially pass the driver to the canvas?
 let driver = new CanvasDriver()
-let canvas = new GraphCanvas(driver.dimensions(), driver.context2d());
+let canvas = new Renderer(driver.dimensions(), driver.context2d());
 
 driver.onmousedown(pos => {
 	box.click(pos)
