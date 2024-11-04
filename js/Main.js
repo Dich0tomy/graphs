@@ -11,10 +11,8 @@ import { Renderer } from './Renderer.js';
 // 	- Cached graph data I guess
 // 	Implement persistence for it as well (https://www.iubenda.com/en/help/5525-cookies-gdpr-requirements), implement it only
 // 	if the cookies are enabled.
-// 3. I *guess* add some nice utilities, like automatically guessing the BoundingBox, exporting all graphs data simultenously
-// 4. Refactor things like Drag to classes
-// 5. Rename GraphCanvas to something like Renderer
-// 6. FIX: Bounding box for files occupying more than the canvas size
+// 3. FIX: Bounding box for files occupying more than the canvas size
+// 4. I *guess* add some nice utilities, like automatically guessing the BoundingBox, exporting all graphs data simultenously
 
 let box = new BoundingBox();
 
@@ -91,12 +89,9 @@ elems.forEach(elem => {
 		if(zero > ev.which || ev.which > nine) {
 			ev.preventDefault()
 
-			const labelError = document.querySelector(`.input-error[for=${elem.name}]`)
-			labelError.style.display = 'block'
 			elem.style.border = '2px solid red'
 			setTimeout(
 				() => {
-					labelError.style.display = 'none'
 					elem.style.border = originalBorder
 				},
 				1000
