@@ -45,10 +45,12 @@ export class BoundingBox {
 
     ctx.lineWidth = 2
     ctx.strokeStyle = '#5555ee'
+		ctx.setLineDash([15, 10]);
     ctx.strokeRect(x, y, width, height)
 
     ctx.strokeStyle = '#aaaacc'
     ctx.fillStyle = '#5555ee'
+		ctx.setLineDash([])
     this._anchors.forEach(a => a.draw(ctx))
   }
 
