@@ -1,0 +1,11 @@
+/*
+
+!.gitignore
+!css
+!js
+!img
+!.envrc
+
+!flake.lock
+!flake.nix
+!index.html

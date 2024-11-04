@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" >
+    <link rel="stylesheet" href="./css/main.css" >
+
+    <script defer type="module" src="./js/main.js"></script>
+
+    <title>Analizator grafów</title>
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <header class="header">
+        <h1>Analizator grafów</h1>
+      </header>
+      <main class="workspace">
+        <aside class="settings">
+          <label for="scale_x">
+            Skala x
+          </label>
+          <input type="number" name="scale_x" value="100"/>
+          <label class="input-error" for="scale_x">
+            Kurwo wpisz tu numerek
+          </label>
+          <label for="scale_y">
+            Skala y
+          </label>
+          <input type="number" name="scale_y" value="100"/>
+          <label class="input-error" for="scale_y">
+            Kurwo wpisz tu numerek
+          </label>
+          <label for="file-selector">
+            <div>
+              Wybierz zdjęcia grafów
+            </div>
+          </label>
+          <input name="file-selector" type="file" accept="image/jpg, image/png" multiple/>
+
+          <ul class="list border"> </ul>
+        </aside>
+        <div class="graph">
+          <canvas class="border" />
+        </div>
+        <aside class="data">
+          <table class="table">
+            <thead>
+              <tr>
+                <td>x</td>
+                <td>y</td>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </aside>
+      </main>
+    </div>
+  </body>
+</html>
