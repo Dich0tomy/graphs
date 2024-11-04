@@ -1,6 +1,42 @@
+import { BoundingBox } from './boundingBox.js';
 import { GraphCanvas } from './canvas.js';
+import { CanvasDriver } from './canvasDriver.js';
 
-let canvas = new GraphCanvas();
+// TODO:
+// 1. Create a CanvasDriver which will get the canvas and it's context, we setup GraphCanvas from the Driver's context
+// 2. Setup proper events via the CanvasDriver, we pass callbacks to it which will properly update the file list and such
+// 3. Create a separate class which stores the GraphSettings
+// 4. Create some kind of FileList which will store the following info per each file (graph)
+// 	- The image
+// 	- The zoom, position, BoundingBox etc. if implemented
+// 	- The saved GraphSettings
+// 	- Cached graph data I guess
+// 	Implement persistence for it as well (https://www.iubenda.com/en/help/5525-cookies-gdpr-requirements), implement it only
+// 	if the cookies are enabled.
+// 5. I *guess* add some nice utilities, like automatically guessing the BoundingBox, exporting all graphs data simultenously
+// 6. Refactor things like Drag to classes
+// 7. Rename GraphCanvas to something like Renderer
+// 8. Rename files to PascalCase
+// 9. FIX: Bounding box for files occupying more than the canvas size
+
+let box = new BoundingBox();
+
+// TODO: Potentially pass the driver to the canvas?
+let driver = new CanvasDriver()
+let canvas = new GraphCanvas(driver.dimensions(), driver.context2d());
+
+driver.onmousedown(pos => {
+	box.click(pos)
+	canvas.setActiveBox(box)
+})
+driver.onmouseup(pos => {
+	box.release(pos)
+	canvas.setActiveBox(box)
+})
+driver.onmousemove(pos => {
+	box.move(pos)
+	canvas.setActiveBox(box)
+})
 
 function imageFromFile(file) {
 	let image = new Image();
@@ -9,8 +45,14 @@ function imageFromFile(file) {
 }
 
 function updateCanvasWith(file) {
-	let image = imageFromFile(file)
-  image.onload = () => canvas.setActive(image)
+	let img = imageFromFile(file)
+  img.onload = () => {
+  	canvas.setActiveImage(img)
+
+		const off = driver.centerOffset(img.width, img.height)
+		box.setBounds(off.x, off.y, img.width, img.height)
+		canvas.setActiveBox(box)
+	}
 }
 
 function updateFileList(files) {
