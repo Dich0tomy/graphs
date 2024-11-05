@@ -3,24 +3,28 @@ import { BoundingBox } from './BoundingBox.js';
 import { Renderer } from './Renderer.js';
 
 // TODO:
-// 1. Properly update all sizes and dimensions from one place and accomodate the bounding box size for the size of the image and the canvas
-// 2. Use up down and move events from the entire window not just the canvas
-// 3. Create a separate class which stores the GraphSettings
-// 4. Create some kind of FileList which will store the following info per each file (graph)
+// 1. Decouple BoundingBox from image size/offset I reckon?
+// 2. Properly update all sizes and dimensions from one place and accomodate the bounding box size for the size of the image and the canvas
+// 	- The image size must be untouched to haver proper ImageData
+// 	- A class that holds the proper size and reacts to resize
+// 3. Use up down and move events from the entire window not just the canvas
+// 4. Create a separate class which stores the GraphSettings
+// 5. Create some kind of FileList which will store the following info per each file (graph)
 // 	- The image
 // 	- The zoom, position, BoundingBox etc. if implemented
 // 	- The saved GraphSettings
 // 	- Cached graph data I guess
 // 	Implement persistence for it as well (https://www.iubenda.com/en/help/5525-cookies-gdpr-requirements), implement it only
 // 	if the cookies are enabled.
-// 5. FIX: Bounding box for files occupying more than the canvas size
-// 6. I *guess* add some nice utilities, like automatically guessing the BoundingBox, exporting all graphs data simultenously
+// 6. FIX: Bounding box for files occupying more than the canvas size
+// 7. I *guess* add some nice utilities, like automatically guessing the BoundingBox, exporting all graphs data simultenously
 
 let box = new BoundingBox();
+let currentImage = null
 
 // TODO: Potentially pass the driver to the canvas?
 let driver = new CanvasDriver()
-let canvas = new Renderer(driver.dimensions(), driver.context2d());
+let canvas = new Renderer(driver);
 
 driver.onmousedown(pos => {
 	box.click(pos)
@@ -35,6 +39,16 @@ driver.onmousemove(pos => {
 	canvas.setActiveBox(box)
 })
 
+window.visualViewport.addEventListener('resize', _ev => {
+	driver.fitCanvas()
+
+	if(currentImage) {
+		const off = driver.centerOffset(currentImage.width, currentImage.height)
+		box.setBounds(off.x, off.y, currentImage.width, currentImage.height)
+		canvas.redrawWhole()
+	}
+})
+
 function imageFromFile(file) {
 	let image = new Image();
 	image.src = URL.createObjectURL(file)
@@ -44,11 +58,12 @@ function imageFromFile(file) {
 function updateCanvasWith(file) {
 	let img = imageFromFile(file)
   img.onload = () => {
-  	canvas.setActiveImage(img)
+		currentImage = img
 
-		const off = driver.centerOffset(img.width, img.height)
-		box.setBounds(off.x, off.y, img.width, img.height)
+		const off = driver.centerOffset(currentImage.width, currentImage.height)
+		box.setBounds(off.x, off.y, currentImage.width, currentImage.height)
 		canvas.setActiveBox(box)
+		canvas.setActiveImage(currentImage)
 	}
 }
 

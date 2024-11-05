@@ -2,7 +2,7 @@ export class CanvasDriver {
   constructor() {
     this._canvas = document.querySelector('canvas');
 
-		this._setupCanvas();
+		this.fitCanvas();
   }
 
   context2d() {
@@ -40,7 +40,7 @@ export class CanvasDriver {
 		}
 	}
 
-  _setupCanvas() {
+  fitCanvas() {
     this._canvas.width = this._canvas.clientWidth
     this._canvas.height = this._canvas.clientHeight
   }
