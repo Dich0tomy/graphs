@@ -10,19 +10,19 @@ export class CanvasDriver {
 	}
 
   onmousedown(callback) {
-		this._canvas.onmousedown = ev => {
+		document.onmousedown = ev => {
 			callback(this._canvasMousePos(ev))
 		}
 	}
 
   onmouseup(callback) {
-		this._canvas.onmouseup = ev => {
+		document.onmouseup = ev => {
 			callback(this._canvasMousePos(ev))
 		}
 	}
 
   onmousemove(callback) {
-		this._canvas.onmousemove = ev => {
+		document.onmousemove = ev => {
 			callback(this._canvasMousePos(ev))
 		}
 	}
