@@ -75,6 +75,10 @@ label[for=file-selector] {
   box-sizing: border-box;
 }
 
+.chosen {
+	background-color: gray;
+}
+
 .settings .list li:hover {
   cursor: pointer;
   background-color: darkgray;
