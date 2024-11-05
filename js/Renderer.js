@@ -39,22 +39,22 @@ export class Renderer {
     let ctx = this._context()
 
     if(_image) {
-      const width = Math.floor(Math.min(_image.width, canvasWidth))
-      const height = Math.floor(Math.min(_image.height, canvasHeight))
+    	const { floor, min } = Math
+			const boxProtrudance = this._box.protrudance()
+			const requiredPadding = boxProtrudance * 4
 
-			const protrudance = this._box.protrudance()
-			const aW = (width - protrudance);
-			const aH = (height - protrudance);
+      const width = floor(min(_image.width, canvasWidth)) - requiredPadding
+			const height = floor(min(_image.height, canvasHeight)) - requiredPadding
 
-      const off = this._centerOffset(aW, aH)
+      const off = this._centerOffset(width, height)
 
       this._clear()
       ctx.drawImage(
         _image,
         off.x,
 				off.y,
-				aW,
-				aH
+				width,
+				height
       )
       this._box.draw(ctx)
     }
@@ -64,7 +64,7 @@ export class Renderer {
   	const { width, height } = this._driver.dimensions()
 		let ctx = this._context()
 
-    ctx.fillStyle = '#ffffff'
+    ctx.fillStyle = '#333333'
     ctx.fillRect(0, 0, width, height);
   }
 
